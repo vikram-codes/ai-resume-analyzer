@@ -1,10 +1,18 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { formatSize } from "~/lib/utils";
 
-function FileUploader({ onFileSelect, selectedFile = null }) {
+interface FileUploaderProps {
+  onFileSelect: (file: File | null) => void;
+  selectedFile?: File | null;
+}
+
+function FileUploader({
+  onFileSelect,
+  selectedFile = null,
+}: FileUploaderProps) {
   const onDrop = useCallback(
-    (acceptedFiles) => {
+    (acceptedFiles: File[]) => {
       const file = acceptedFiles[0] || null;
       onFileSelect?.(file);
     },
@@ -20,7 +28,7 @@ function FileUploader({ onFileSelect, selectedFile = null }) {
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
         [".docx"],
     },
-    maxSize: 20 * 1024 * 1024, // 20MB
+    maxSize: 20 * 1024 * 1024,
   });
 
   const file = selectedFile;
@@ -30,77 +38,120 @@ function FileUploader({ onFileSelect, selectedFile = null }) {
       <div {...getRootProps()}>
         <input {...getInputProps()} />
         {file ? (
-          <div className="flex flex-col items-center justify-center space-y-3">
+          <div
+            className="flex flex-col items-center justify-center"
+            style={{ gap: "1rem" }}
+          >
             <svg
-              className="w-12 h-12 text-green-400"
-              fill="none"
-              stroke="currentColor"
+              width="48"
+              height="48"
+              fill="var(--color-success)"
               viewBox="0 0 24 24"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <div className="text-center">
-              <p className="text-lg font-medium text-green-400">
-                File selected successfully
+              <p
+                style={{
+                  fontSize: "1.125rem",
+                  fontWeight: "600",
+                  color: "var(--color-success)",
+                  marginBottom: "0.5rem",
+                }}
+              >
+                File uploaded successfully
               </p>
-              <p className="text-sm text-slate-300 mt-1 font-medium">
+              <p
+                style={{
+                  fontSize: "0.875rem",
+                  color: "var(--color-text-primary)",
+                  fontWeight: "500",
+                  marginBottom: "0.25rem",
+                }}
+              >
                 {file.name}
               </p>
-              <p className="text-xs text-gray-400 mt-1">
+              <p
+                style={{
+                  fontSize: "0.75rem",
+                  color: "var(--color-text-tertiary)",
+                }}
+              >
                 {formatSize(file.size)} • Click to change
               </p>
             </div>
           </div>
         ) : isDragActive ? (
-          <div className="flex flex-col items-center justify-center space-y-3">
+          <div
+            className="flex flex-col items-center justify-center"
+            style={{ gap: "1rem" }}
+          >
             <svg
-              className="w-12 h-12 text-blue-400 animate-bounce"
-              fill="none"
-              stroke="currentColor"
+              width="48"
+              height="48"
+              fill="var(--color-primary)"
               viewBox="0 0 24 24"
+              style={{ animation: "bounce 1s infinite" }}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"
-              />
+              <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
             </svg>
             <div className="text-center">
-              <p className="text-lg font-medium text-blue-400">
+              <p
+                style={{
+                  fontSize: "1.125rem",
+                  fontWeight: "600",
+                  color: "var(--color-primary)",
+                  marginBottom: "0.5rem",
+                }}
+              >
                 Drop your resume here
               </p>
-              <p className="text-sm text-blue-300 mt-1">Release to upload</p>
+              <p
+                style={{ fontSize: "0.875rem", color: "var(--color-primary)" }}
+              >
+                Release to upload
+              </p>
             </div>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center space-y-3">
+          <div
+            className="flex flex-col items-center justify-center"
+            style={{ gap: "1rem" }}
+          >
             <svg
-              className="w-12 h-12 text-gray-400"
-              fill="none"
-              stroke="currentColor"
+              width="48"
+              height="48"
+              fill="var(--color-text-tertiary)"
               viewBox="0 0 24 24"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
-                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-              />
+              <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
             </svg>
             <div className="text-center">
-              <p className="text-lg font-medium text-slate-300">
+              <p
+                style={{
+                  fontSize: "1.125rem",
+                  fontWeight: "600",
+                  color: "var(--color-text-primary)",
+                  marginBottom: "0.5rem",
+                }}
+              >
                 Upload your resume
               </p>
-              <p className="text-sm text-gray-400 mt-1">
+              <p
+                style={{
+                  fontSize: "0.875rem",
+                  color: "var(--color-text-secondary)",
+                  marginBottom: "0.5rem",
+                }}
+              >
                 Drag and drop or click to browse
               </p>
-              <p className="text-xs text-gray-500 mt-2">
+              <p
+                style={{
+                  fontSize: "0.75rem",
+                  color: "var(--color-text-tertiary)",
+                }}
+              >
                 PDF, DOC, DOCX up to 20MB
               </p>
             </div>
@@ -111,7 +162,14 @@ function FileUploader({ onFileSelect, selectedFile = null }) {
         <button
           type="button"
           onClick={() => onFileSelect?.(null)}
-          className="mt-3 w-full px-4 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded-lg transition-colors duration-200 border border-red-400/20 hover:border-red-400/40"
+          className="btn-secondary"
+          style={{
+            marginTop: "1rem",
+            width: "100%",
+            color: "var(--color-error)",
+            borderColor: "var(--color-error)",
+            background: "var(--color-surface)",
+          }}
         >
           Remove file
         </button>

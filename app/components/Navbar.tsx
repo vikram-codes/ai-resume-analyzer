@@ -6,38 +6,55 @@ function Navbar({ upload = true }) {
 
   return (
     <nav className="navbar">
-      <Link to="/" className="text-2xl font-bold text-gradient">
-        ResumeTrack
-      </Link>
-      <div className="flex items-center gap-3">
-        {upload && (
-          <Link to="/upload" className="primary-button w-fit">
-            Upload Resume
-          </Link>
-        )}
+      <div
+        className="container"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "0 1rem",
+        }}
+      >
+        <Link to="/" className="navbar-brand">
+          ResuMind
+        </Link>
 
-        {auth.isAuthenticated && (
-          <button
-            className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold p-2 rounded-xl transition-all duration-200 transform hover:scale-[1.02]"
-            onClick={() => auth.signOut()}
-            title="Sign Out"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+        <div className="flex items-center gap-4">
+          {upload && (
+            <Link to="/upload" className="btn-primary">
+              Analyze Resume
+            </Link>
+          )}
+
+          {auth.isAuthenticated && (
+            <button
+              className="btn-secondary"
+              onClick={() => auth.signOut()}
+              title="Sign Out"
+              style={{
+                padding: "0.5rem",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-              />
-            </svg>
-          </button>
-        )}
+              <svg
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                />
+              </svg>
+            </button>
+          )}
+        </div>
       </div>
     </nav>
   );

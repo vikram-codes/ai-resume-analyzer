@@ -3,8 +3,11 @@ import { useLocation, useNavigate } from "react-router";
 import { usePuterStore } from "~/lib/puter";
 
 export const meta = [
-  { title: "Authentication" },
-  { name: "description", content: "Authentication page for ResumeTrack" },
+  { title: "Sign In - ResuMind" },
+  {
+    name: "description",
+    content: "Sign in to access AI-powered resume analysis",
+  },
 ];
 
 function auth() {
@@ -20,45 +23,110 @@ function auth() {
   }, [auth.isAuthenticated, next, navigate]);
 
   return (
-    <main className="bg-zinc-900 flex min-h-screen items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        <div className="bg-gray-800 border border-gray-700 rounded-3xl p-8 shadow-2xl backdrop-blur-sm">
-          <div className="text-center mb-8">
-            <div className="mb-4">
-              <h1 className="text-gradient text-lg min-[400px]:text-xl sm:text-2xl md:text-3xl font-bold mb-2">
-                ResumeTrack
+    <main
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background:
+          "linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(79, 70, 229, 0.08) 100%)",
+      }}
+    >
+      <div style={{ width: "100%", maxWidth: "400px", padding: "0 1rem" }}>
+        <div
+          className="card-elevated"
+          style={{ padding: "2.5rem", textAlign: "center" }}
+        >
+          <div style={{ marginBottom: "2rem" }}>
+            <div style={{ marginBottom: "1.5rem" }}>
+              <h1 style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>
+                Welcome to ResuMind
               </h1>
             </div>
             {!auth.isAuthenticated && (
               <>
-                <h2 className="text-slate-300 text-lg">Welcome back</h2>
-                <p className="text-slate-400 text-sm mt-2">
-                  Sign in to continue your career journey
+                <h2
+                  style={{
+                    fontSize: "1.125rem",
+                    color: "var(--color-text-secondary)",
+                    marginBottom: "0.5rem",
+                  }}
+                >
+                  Sign in to continue
+                </h2>
+                <p
+                  style={{
+                    fontSize: "0.875rem",
+                    color: "var(--color-text-tertiary)",
+                  }}
+                >
+                  Get AI-powered insights to boost your career
                 </p>
               </>
             )}
           </div>
 
-          <div className="space-y-4">
+          <div style={{ marginBottom: "2rem" }}>
             {isLoading ? (
               <button
-                className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="btn-primary w-full"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "0.5rem",
+                }}
                 disabled
               >
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                <div
+                  style={{
+                    width: "16px",
+                    height: "16px",
+                    border: "2px solid white",
+                    borderTop: "2px solid transparent",
+                    borderRadius: "50%",
+                    animation: "spin 1s linear infinite",
+                  }}
+                ></div>
                 <span>Signing you in...</span>
               </button>
             ) : (
               <>
                 {auth.isAuthenticated ? (
-                  <div className="space-y-4">
-                    <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-4 text-center">
-                      <p className="text-green-400 text-sm">
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "1rem",
+                    }}
+                  >
+                    <div
+                      style={{
+                        background: "rgba(16, 185, 129, 0.1)",
+                        border: "1px solid rgba(16, 185, 129, 0.2)",
+                        borderRadius: "0.75rem",
+                        padding: "1rem",
+                        textAlign: "center",
+                      }}
+                    >
+                      <p
+                        style={{
+                          color: "var(--color-success)",
+                          fontSize: "0.875rem",
+                        }}
+                      >
                         ✓ You're already signed in
                       </p>
                     </div>
                     <button
-                      className="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-[1.02]"
+                      className="btn-secondary"
+                      style={{
+                        background:
+                          "linear-gradient(135deg, var(--color-error), #dc2626)",
+                        color: "white",
+                        borderColor: "transparent",
+                      }}
                       onClick={() => auth.signOut()}
                     >
                       Sign Out
@@ -66,8 +134,9 @@ function auth() {
                   </div>
                 ) : (
                   <button
-                    className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-[1.02] shadow-lg hover:shadow-blue-500/25"
+                    className="btn-primary w-full"
                     onClick={() => auth.signIn()}
+                    style={{ fontSize: "1rem", padding: "0.875rem 1.5rem" }}
                   >
                     Sign In with Puter
                   </button>
@@ -76,13 +145,31 @@ function auth() {
             )}
           </div>
 
-          <div className="mt-8 pt-6 border-t border-gray-700">
-            <p className="text-center text-slate-400 text-xs">
+          <div
+            style={{
+              paddingTop: "1.5rem",
+              borderTop: "1px solid var(--color-border-light)",
+            }}
+          >
+            <p
+              style={{
+                fontSize: "0.75rem",
+                color: "var(--color-text-tertiary)",
+                textAlign: "center",
+              }}
+            >
               Secure authentication powered by Puter
             </p>
           </div>
         </div>
       </div>
+
+      <style>{`
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
     </main>
   );
 }
