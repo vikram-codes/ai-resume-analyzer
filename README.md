@@ -118,4 +118,4 @@ Building this project taught me:
 
 **Built by [Vikram](https://github.com/vikram-codes)** as a portfolio project to showcase full-stack development skills.
 
-_If you reached, please feel free to give it a star ⭐!_
+_If you reached here, please feel free to give it a star ⭐!_
