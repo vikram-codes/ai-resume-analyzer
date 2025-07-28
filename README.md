@@ -69,7 +69,7 @@ As a developer looking for opportunities, I wanted to:
 
 ## 📱 How to Use
 
-1. **Visit the live demo**: [resumind.vercel.app](https://resumind.vercel.app)
+1. **Visit the live demo**: [resumind-wine.vercel.app](https://resumind-wine.vercel.app)
 2. **Sign in** with the secure authentication
 3. **Upload your resume** (PDF format works best)
 4. **Add job details** (optional but gives better results)
@@ -118,4 +118,4 @@ Building this project taught me:
 
 **Built by [Vikram](https://github.com/vikram-codes)** as a portfolio project to showcase full-stack development skills.
 
-_If this helped you improve your resume, feel free to give it a ⭐!_
+_If you reached, please feel free to give it a star ⭐!_
