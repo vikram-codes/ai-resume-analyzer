@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { usePuterStore } from "~/lib/puter";
 
-function Navbar() {
+function Navbar({ upload = true }) {
   const { auth } = usePuterStore();
 
   return (
@@ -10,9 +10,12 @@ function Navbar() {
         ResumeTrack
       </Link>
       <div className="flex items-center gap-3">
-        <Link to="/upload" className="primary-button w-fit">
-          Upload Resume
-        </Link>
+        {upload && (
+          <Link to="/upload" className="primary-button w-fit">
+            Upload Resume
+          </Link>
+        )}
+
         {auth.isAuthenticated && (
           <button
             className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold p-2 rounded-xl transition-all duration-200 transform hover:scale-[1.02]"
