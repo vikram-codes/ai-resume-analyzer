@@ -152,11 +152,19 @@ export const prepareInstructions = ({
   The job title is: ${jobTitle}
   The job description is: ${jobDescription}
   
-  IMPORTANT: Return ONLY a valid JSON object with no additional text, comments, or markdown formatting.
-  Do not use any backticks, code blocks, or explanatory text.
-  Ensure all strings are properly escaped and quoted.
+  CRITICAL JSON FORMATTING RULES:
+  1. Return ONLY a valid JSON object with no additional text, comments, or markdown formatting
+  2. Do not use any backticks, code blocks, or explanatory text
+  3. Ensure all strings are properly escaped and quoted
+  4. Use double quotes for all strings, never single quotes
+  5. Escape any double quotes within strings using backslash: \"
+  6. Do not include any trailing commas
+  7. Ensure all objects and arrays are properly closed
+  8. Keep all text within strings concise and avoid line breaks
+  9. If you must include quotes within a string, escape them as \"
+  10. Do not truncate the response - provide the complete JSON structure
   
   The JSON structure must exactly match this format:
   ${AIResponseFormat}
   
-  Return the analysis as a clean JSON object starting with { and ending with }.`;
+  Return the analysis as a clean, complete JSON object starting with { and ending with }.`;

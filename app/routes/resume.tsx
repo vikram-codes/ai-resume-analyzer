@@ -6,8 +6,9 @@ import ATS from "~/components/ATS";
 import Details from "~/components/Details";
 
 export const meta = () => [
-  { title: "Resume Analysis - ResuMind" },
-  { name: "description", content: "Detailed AI analysis of your resume" },
+  { title: "Resume Analysis Results - ResuMind AI Insights" },
+  { name: "description", content: "View your comprehensive AI-powered resume analysis with detailed feedback, ATS scoring, and actionable recommendations for improvement." },
+  { name: "robots", content: "noindex, nofollow" },
 ];
 
 const Resume = () => {
@@ -45,7 +46,6 @@ const Resume = () => {
       setImageUrl(imageUrl);
 
       setFeedback(data.feedback);
-      console.log({ resumeUrl, imageUrl, feedback: data.feedback });
     };
 
     loadResume();

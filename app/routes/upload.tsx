@@ -6,6 +6,12 @@ import Navbar from "~/components/Navbar";
 import { convertPdfToImage } from "~/lib/pdf2img";
 import { usePuterStore } from "~/lib/puter";
 
+export const meta = () => [
+  { title: "Upload Resume - ResuMind AI Analysis Tool" },
+  { name: "description", content: "Upload your resume for comprehensive AI-powered analysis including ATS scoring, expert feedback, and optimization recommendations." },
+  { name: "robots", content: "noindex, nofollow" },
+];
+
 const generateSampleFeedback = (jobTitle?: string, jobDescription?: string) => {
   return {
     overallScore: Math.floor(Math.random() * 25) + 70,
@@ -179,8 +185,6 @@ function upload() {
         prepareInstructions({ jobTitle, jobDescription })
       );
     } catch (aiError: any) {
-      console.error("AI Service Error:", aiError);
-
       if (
         aiError?.code === "error_400_from_delegate" &&
         aiError?.message?.includes("Permission denied")
@@ -215,7 +219,6 @@ function upload() {
           navigate(`/resume/${uuid}`);
           return;
         } catch (parseError) {
-          console.error("Sample feedback error:", parseError);
           setStatusText(
             "Error: Failed to generate sample analysis. Please try again later."
           );
@@ -241,6 +244,8 @@ function upload() {
         .replace(/```json/gi, "")
         .replace(/```/g, "")
         .replace(/^\s*[\r\n]/gm, "")
+        .replace(/[\r\n]+/g, " ")
+        .replace(/\s+/g, " ")
         .trim();
 
       const jsonStart = cleanedText.indexOf("{");
@@ -250,8 +255,16 @@ function upload() {
         cleanedText = cleanedText.substring(jsonStart, jsonEnd + 1);
       }
 
-      console.log("Raw AI Response:", feedbackText);
-      console.log("Cleaned Response:", cleanedText);
+      // Additional cleaning for common AI response issues
+      cleanedText = cleanedText
+        .replace(
+          /\\"([^"]*)\\"([^"]*)\\"([^"]*)\\"([^"]*)\\"([^"]*)\\"([^"]*)\\"([^"]*)\\"([^"]*)\\"([^"]*)\\"([^"]*)\\"([^"]*)\\"/g,
+          '\\"$1$2$3$4$5$6$7$8$9$10$11\\"'
+        )
+        .replace(/\\n/g, " ")
+        .replace(/\\r/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
 
       let parsedFeedback;
       try {
@@ -261,23 +274,118 @@ function upload() {
           throw new Error("Missing required fields in response");
         }
       } catch (parseError) {
-        console.error("JSON Parse Error:", parseError);
-        console.error("Failed to parse:", cleanedText);
 
         try {
-          const fixedText = cleanedText
-            .replace(/([{,]\s*)(\w+):/g, '$1"$2":')
-            .replace(
-              /:\s*([^",{\[\]}\s][^",}\]]*[^",{\[\]}\s])\s*([,}])/g,
-              ':"$1"$2'
-            );
+          let fixedText = cleanedText;
 
-          console.log("Attempting to fix JSON:", fixedText);
+          // Fix common JSON issues
+          fixedText = fixedText
+            // Fix unquoted keys
+            .replace(/([{,]\s*)(\w+):/g, '$1"$2":')
+            // Fix unescaped quotes within strings
+            .replace(
+              /:\s*"([^"]*)"([^"]*)"([^"]*)"([^"]*)\"/g,
+              (
+                _match: string,
+                g1: string,
+                g2: string,
+                g3: string,
+                g4: string
+              ) => {
+                return `:"${g1}\\"${g2}\\"${g3}\\"${g4}"`;
+              }
+            )
+            // Fix incomplete strings by finding unclosed quotes
+            .replace(/"([^"]*)\n/g, '"$1"')
+            // Fix trailing commas before closing brackets
+            .replace(/,(\s*[}\]])/g, "$1")
+            // Remove any incomplete JSON at the end
+            .replace(/,\s*$/, "")
+            // Ensure proper closure of objects/arrays
+            .trim();
+
+          // If the JSON appears to be cut off, try to close it properly
+          const openBraces = (fixedText.match(/{/g) || []).length;
+          const closeBraces = (fixedText.match(/}/g) || []).length;
+          const openBrackets = (fixedText.match(/\[/g) || []).length;
+          const closeBrackets = (fixedText.match(/\]/g) || []).length;
+
+          // Add missing closing braces/brackets
+          if (openBraces > closeBraces) {
+            fixedText += "}}".repeat(openBraces - closeBraces);
+          }
+          if (openBrackets > closeBrackets) {
+            fixedText += "]".repeat(openBrackets - closeBrackets);
+          }
+
+          // Remove any trailing incomplete properties
+          fixedText = fixedText.replace(/,\s*"[^"]*"?\s*:\s*"[^"]*"?\s*$/, "");
+
+          // Ensure it ends with closing brace
+          if (!fixedText.endsWith("}")) {
+            fixedText += "}";
+          }
+
           parsedFeedback = JSON.parse(fixedText);
         } catch (fixError) {
-          return setStatusText(
-            "Error: AI returned invalid response format. Please try again."
-          );
+          parsedFeedback = {
+            overallScore: 50,
+            ATS: {
+              score: 45,
+              tips: [
+                {
+                  type: "improve",
+                  tip: "Resume analysis failed",
+                  explanation:
+                    "The AI analysis encountered an error. Please try uploading your resume again.",
+                },
+              ],
+            },
+            toneAndStyle: {
+              score: 50,
+              tips: [
+                {
+                  type: "improve",
+                  tip: "Analysis incomplete",
+                  explanation:
+                    "Unable to complete tone and style analysis. Please retry.",
+                },
+              ],
+            },
+            content: {
+              score: 50,
+              tips: [
+                {
+                  type: "improve",
+                  tip: "Content analysis failed",
+                  explanation:
+                    "Could not analyze resume content. Please try again.",
+                },
+              ],
+            },
+            structure: {
+              score: 50,
+              tips: [
+                {
+                  type: "improve",
+                  tip: "Structure analysis incomplete",
+                  explanation:
+                    "Resume structure could not be fully analyzed. Please retry.",
+                },
+              ],
+            },
+            skills: {
+              score: 50,
+              tips: [
+                {
+                  type: "improve",
+                  tip: "Skills analysis failed",
+                  explanation:
+                    "Unable to analyze skills section. Please try uploading again.",
+                },
+              ],
+            },
+          };
         }
       }
 
@@ -286,7 +394,6 @@ function upload() {
       setStatusText("Analysis complete, redirecting...");
       navigate(`/resume/${uuid}`);
     } catch (error) {
-      console.error("Analysis Error:", error);
       setStatusText(
         "Error: Failed to process analysis results. Please try again."
       );

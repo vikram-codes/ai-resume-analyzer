@@ -8,10 +8,38 @@ import { useNavigate, Link } from "react-router";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "ResuMind - AI Resume Analysis" },
+    { title: "ResuMind - AI-Powered Resume Analysis & Optimization Tool" },
     {
       name: "description",
-      content: "Transform your resume with AI-powered insights and feedback",
+      content: "Get comprehensive AI-powered resume analysis with ATS scoring, expert feedback, and actionable insights to land your dream job. Free resume analyzer with instant results.",
+    },
+    {
+      name: "keywords",
+      content: "resume analysis, ATS checker, resume optimizer, job application, career tools, AI resume feedback, resume scanner, professional resume review",
+    },
+    {
+      property: "og:title",
+      content: "ResuMind - AI-Powered Resume Analysis Tool",
+    },
+    {
+      property: "og:description", 
+      content: "Transform your resume with AI-powered insights, ATS scoring, and expert feedback to increase your job success rate.",
+    },
+    {
+      property: "og:type",
+      content: "website",
+    },
+    {
+      name: "twitter:card",
+      content: "summary_large_image",
+    },
+    {
+      name: "twitter:title",
+      content: "ResuMind - AI Resume Analysis Tool",
+    },
+    {
+      name: "twitter:description",
+      content: "Get instant AI-powered resume feedback and ATS scoring to optimize your job applications.",
     },
   ];
 }
