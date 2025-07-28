@@ -1,6 +1,14 @@
 import ScoreCircle from "./ScoreCircle";
 
 function Summary({ feedback }) {
+  if (!feedback) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-gray-500">No feedback data available</p>
+      </div>
+    );
+  }
+
   const getScoreColor = (score) => {
     if (score >= 80) return "var(--color-success)";
     if (score >= 60) return "var(--color-warning)";
@@ -14,25 +22,25 @@ function Summary({ feedback }) {
   };
 
   const categories = [
-    { name: "ATS Compatibility", score: feedback.ATS?.score || 0, key: "ATS" },
+    { name: "ATS Compatibility", score: feedback?.ATS?.score || 0, key: "ATS" },
     {
       name: "Content Quality",
-      score: feedback.content?.score || 0,
+      score: feedback?.content?.score || 0,
       key: "content",
     },
     {
       name: "Structure & Format",
-      score: feedback.structure?.score || 0,
+      score: feedback?.structure?.score || 0,
       key: "structure",
     },
     {
       name: "Tone & Style",
-      score: feedback.toneAndStyle?.score || 0,
+      score: feedback?.toneAndStyle?.score || 0,
       key: "toneAndStyle",
     },
     {
       name: "Skills Presentation",
-      score: feedback.skills?.score || 0,
+      score: feedback?.skills?.score || 0,
       key: "skills",
     },
   ];
@@ -65,16 +73,16 @@ function Summary({ feedback }) {
       <div className="flex items-center justify-center p-8 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl mb-8 border border-gray-200">
         <div className="text-center">
           <div className="mb-4 flex justify-center">
-            <ScoreCircle score={feedback.overallScore || 0} />
+            <ScoreCircle score={feedback?.overallScore || 0} />
           </div>
           <h4 className="text-2xl font-semibold mb-2 text-gray-900">
             Overall Score
           </h4>
           <p
             className="text-lg font-medium mb-2"
-            style={{ color: getScoreColor(feedback.overallScore || 0) }}
+            style={{ color: getScoreColor(feedback?.overallScore || 0) }}
           >
-            {getScoreLabel(feedback.overallScore || 0)}
+            {getScoreLabel(feedback?.overallScore || 0)}
           </p>
           <p className="text-gray-500 text-sm max-w-xs mx-auto">
             Based on analysis of content, structure, ATS compatibility, and
