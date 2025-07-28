@@ -6,7 +6,8 @@ export const meta = [
   { title: "Sign In - ResuMind AI Resume Analysis" },
   {
     name: "description",
-    content: "Sign in to ResuMind to access comprehensive AI-powered resume analysis, ATS scoring, and professional feedback.",
+    content:
+      "Sign in to ResuMind to access comprehensive AI-powered resume analysis, ATS scoring, and professional feedback.",
   },
   { name: "robots", content: "noindex, nofollow" },
 ];

@@ -8,7 +8,11 @@ import { usePuterStore } from "~/lib/puter";
 
 export const meta = () => [
   { title: "Upload Resume - ResuMind AI Analysis Tool" },
-  { name: "description", content: "Upload your resume for comprehensive AI-powered analysis including ATS scoring, expert feedback, and optimization recommendations." },
+  {
+    name: "description",
+    content:
+      "Upload your resume for comprehensive AI-powered analysis including ATS scoring, expert feedback, and optimization recommendations.",
+  },
   { name: "robots", content: "noindex, nofollow" },
 ];
 
@@ -274,7 +278,6 @@ function upload() {
           throw new Error("Missing required fields in response");
         }
       } catch (parseError) {
-
         try {
           let fixedText = cleanedText;
 

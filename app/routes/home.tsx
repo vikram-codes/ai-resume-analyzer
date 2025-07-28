@@ -11,19 +11,22 @@ export function meta({}: Route.MetaArgs) {
     { title: "ResuMind - AI-Powered Resume Analysis & Optimization Tool" },
     {
       name: "description",
-      content: "Get comprehensive AI-powered resume analysis with ATS scoring, expert feedback, and actionable insights to land your dream job. Free resume analyzer with instant results.",
+      content:
+        "Get comprehensive AI-powered resume analysis with ATS scoring, expert feedback, and actionable insights to land your dream job. Free resume analyzer with instant results.",
     },
     {
       name: "keywords",
-      content: "resume analysis, ATS checker, resume optimizer, job application, career tools, AI resume feedback, resume scanner, professional resume review",
+      content:
+        "resume analysis, ATS checker, resume optimizer, job application, career tools, AI resume feedback, resume scanner, professional resume review",
     },
     {
       property: "og:title",
       content: "ResuMind - AI-Powered Resume Analysis Tool",
     },
     {
-      property: "og:description", 
-      content: "Transform your resume with AI-powered insights, ATS scoring, and expert feedback to increase your job success rate.",
+      property: "og:description",
+      content:
+        "Transform your resume with AI-powered insights, ATS scoring, and expert feedback to increase your job success rate.",
     },
     {
       property: "og:type",
@@ -39,7 +42,8 @@ export function meta({}: Route.MetaArgs) {
     },
     {
       name: "twitter:description",
-      content: "Get instant AI-powered resume feedback and ATS scoring to optimize your job applications.",
+      content:
+        "Get instant AI-powered resume feedback and ATS scoring to optimize your job applications.",
     },
   ];
 }

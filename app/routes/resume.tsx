@@ -7,7 +7,11 @@ import Details from "~/components/Details";
 
 export const meta = () => [
   { title: "Resume Analysis Results - ResuMind AI Insights" },
-  { name: "description", content: "View your comprehensive AI-powered resume analysis with detailed feedback, ATS scoring, and actionable recommendations for improvement." },
+  {
+    name: "description",
+    content:
+      "View your comprehensive AI-powered resume analysis with detailed feedback, ATS scoring, and actionable recommendations for improvement.",
+  },
   { name: "robots", content: "noindex, nofollow" },
 ];
 
